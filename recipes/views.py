@@ -6,12 +6,13 @@ from django.views.generic.list import ListView
 
 from recipes.forms import RatingForm
 
-try:
-    from recipes.forms import RecipeForm
-    from recipes.models import Recipe
-except Exception:
-    RecipeForm = None
-    Recipe = None
+# try:
+from recipes.forms import RecipeForm
+from recipes.models import Recipe
+
+# except Exception:
+# RecipeForm = None
+# Recipe = None
 
 
 def log_rating(request, recipe_id):
