@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -29,11 +30,12 @@
         </li>
       </ul>
     </nav>
+    {% block pagination %}
     <div class="pagination">
       <span class="step-links">
         {% if page_obj.has_previous %}
-          <a href="?page=1">&laquo; first</a>
-          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -41,33 +43,34 @@
         </span>
 
         {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">next</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
       </span>
     </div>
+    {% endblock pagination %}
   </header>
   <main class="recipe-grid">
     {% for tag in tag_list %}
-      <div class="recipe-card">
-        <h2 class="recipe-card-title">
-          <a href="{% url 'tag_detail' tag.id %}">{{ tag.name }}</a>
-        </h2>
-        {% for recipe in tag.recipes.all %}
-          <p>
-            <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.name }}</a>
-          </p>
-        {% endfor %}
-      </div>
+    <div class="recipe-card">
+      <h2 class="recipe-card-title">
+        <a href="{% url 'tag_detail' tag.id %}">{{ tag.name }}</a>
+      </h2>
+      {% for recipe in tag.recipes.all %}
+      <p>
+        <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.name }}</a>
+      </p>
+      {% endfor %}
+    </div>
     {% empty %}
-      <div>
-        <h1>No tags, yet</h1>
-        <p>
-          Would you like to
-          <a href="{% url 'tag_new' %}">create</a>
-          one?
-        </p>
-      </div>
+    <div>
+      <h1>No tags, yet</h1>
+      <p>
+        Would you like to
+        <a href="{% url 'tag_new' %}">create</a>
+        one?
+      </p>
+    </div>
     {% endfor %}
   </main>
 </body>

@@ -1,62 +1,35 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block list%}
+<main class="recipe-grid">
+  {% for recipe in recipe_list %}
+  <div class="recipe-card">
+    <h2 class="recipe-card-title">
+      <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.name }}</a>
+    </h2>
+    <p class="recipe-card-date">{{ recipe.updated }}</p>
+  </div>
+  {% endfor %}
+</main>
+{% endblock list %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scrumptious</title>
-  <link rel="stylesheet" href="{% static 'css/app.css' %}">
-</head>
+{% block pagination %}
+<div class="pagination">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+    <a href="?page=1">&laquo; first</a>
+    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+    {% endif %}
 
-<body>
-  <header>
-    <nav>
-      <ul>
-        <li>
-          <a href="{% url 'home' %}">Scrumptious</a>
-        </li>
-        <li>
-          <a href="{% url 'tags_list' %}">Tags</a>
-        </li>
-        <li>
-          <a href="{% url 'admin:index' %}">Admin</a>
-        </li>
-        <li>
-          <a href="{% url 'recipe_new' %}">Write a recipe</a>
-        </li>
-      </ul>
-    </nav>
-    <div class="pagination">
-      <span class="step-links">
-        {% if page_obj.has_previous %}
-          <a href="?page=1">&laquo; first</a>
-          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
+    <span class="current">
+      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    </span>
 
-        <span class="current">
-          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">next</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-      </span>
-    </div>
-  </header>
-  <main class="recipe-grid">
-    {% for recipe in recipe_list %}
-      <div class="recipe-card">
-        <h2 class="recipe-card-title">
-          <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.name }}</a>
-        </h2>
-        <p class="recipe-card-date">{{ recipe.updated }}</p>
-      </div>
-    {% endfor %}
-  </main>
-</body>
-
-</html>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">next</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+  </span>
+</div>
+{% endblock pagination %}
