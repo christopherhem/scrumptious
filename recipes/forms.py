@@ -1,6 +1,6 @@
 from django import forms
 
-# try:
+
 from recipes.models import Recipe
 
 
@@ -13,10 +13,6 @@ class RecipeForm(forms.ModelForm):
             "description",
             "image",
         ]
-
-
-# except Exception:
-# pass
 
 
 from recipes.models import Rating
