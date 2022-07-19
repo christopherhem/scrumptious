@@ -60,8 +60,11 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipe
     template_name = "recipes/edit.html"
-    fields = ["name", "author", "description", "image"]
+    fields = ["name", "description", "image"]
     success_url = reverse_lazy("recipes_list")
+
+    def __str__(self):
+        return self.model + " by " + str(self.author)
 
 
 class RecipeDeleteView(LoginRequiredMixin, DeleteView):
