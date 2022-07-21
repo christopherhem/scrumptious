@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block meal_list %}
+    <main class="recipe-grid">
+        <div>
+            <p>
+                <h2>
+                    Would you like to
+                    <a href="{% url 'meal_plan_new' %}">create</a>
+                    a meal plan?
+                </h2>
+            </p>
+        </div>
+        {% for meal in mealplan_list %}
+            <div class="recipe-card">
+                <h2 class="recipe-card-title">
+                    <a href="{% url 'meal_plan_detail' meal.pk %}">{{ meal.name }}</a>
+                </h2>
+            {% endfor %}
+        </main>
+    {% endblock meal_list %}

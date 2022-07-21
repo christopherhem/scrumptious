@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block meal_edit %}
+    <main class="recipe-grid">
+        {% for plan in meal_plan_list %}
+            <div class="recipe-card">
+                <h2 class="recipe-card-title">
+                    <a href="{% url 'meal_plan_detail' recipe.pk %}">{{ meal_plans.name }}</a>
+                </h2>
+                <p class="recipe-card-date">{{ meal_plan.updated }}</p>
+            </div>
+        {% endfor %}
+    </main>
+{% endblock meal_edit %}

@@ -10,12 +10,10 @@ from tags.models import Tag
 # except Exception:
 # Tag = None
 
-
 # Create your views here.
 class TagListView(LoginRequiredMixin, ListView):
     model = Tag
     template_name = "tags/list.html"
-    paginate_by = 2
 
 
 class TagDetailView(LoginRequiredMixin, DetailView):
@@ -26,7 +24,7 @@ class TagDetailView(LoginRequiredMixin, DetailView):
 class TagCreateView(LoginRequiredMixin, CreateView):
     model = Tag
     template_name = "tags/new.html"
-    fields = ["name"]
+    fields = ["name", "recipes"]
     success_url = reverse_lazy("tags_list")
 
     def form_valid(self, form):
@@ -39,6 +37,9 @@ class TagUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "tags/edit.html"
     fields = ["name"]
     success_url = reverse_lazy("tags_list")
+
+    def __str__(self):
+        return self.model
 
 
 class TagDeleteView(LoginRequiredMixin, DeleteView):

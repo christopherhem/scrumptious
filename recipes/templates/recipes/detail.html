@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 {% load markdownify %}
 {% block detail %}
   <main class="recipe-detail">
@@ -23,7 +22,7 @@
     </form>
     <p>
       Tags:
-      {% for tag in recipe.tags.all %}{{ tag.word }}{% endfor %}
+      {% for tag in recipe.tags.all %}{{ tag.name }}{% endfor %}
     </p>
     {{ recipe.description | markdownify }}
     <h2>Ingredients</h2>

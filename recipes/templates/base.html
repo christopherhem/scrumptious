@@ -18,14 +18,17 @@
                     <li>
                         <a href="{% url 'tags_list' %}">Tags</a>
                     </li>
+                    <li>
+                        <a href="{% url 'meal_plan_list' %}">Meal Plans</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'recipe_new' %}">Write a recipe</a>
+                    </li>
                     {% if user.is_staff %}
                         <li>
                             <a href="{% url 'admin:index' %}">Admin</a>
                         </li>
                     {% endif %}
-                    <li>
-                        <a href="{% url 'recipe_new' %}">Write a recipe</a>
-                    </li>
                     <li>
                         {% if user.is_authenticated %}
                             <li>
@@ -39,9 +42,19 @@
                     </li>
                 </ul>
             </nav>
-            {% if user.is_authenticated %}<h1>Welcome, {{ user.username }}</h1>{% endif %}
+            {% if user.is_authenticated %}<h1>Greetings, {{ user.username }}</h1>{% endif %}
         </header>
         <main>
+            {% block tag_list %}
+            {% endblock tag_list %}
+            {% block tag_new %}
+            {% endblock tag_new %}
+            {% block tag_edit %}
+            {% endblock tag_edit %}
+            {% block tag_delete %}
+            {% endblock tag_delete %}
+            {% block tag_detail %}
+            {% endblock tag_detail %}
             {% block list %}
             {% endblock list %}
             {% block content %}
@@ -52,8 +65,16 @@
             {% endblock delete %}
             {% block new %}
             {% endblock new %}
-            {% block pagination %}
-            {% endblock pagination %}
+            {% block meal_new %}
+            {% endblock meal_new %}
+            {% block meal_list %}
+            {% endblock meal_list %}
+            {% block meal_detail %}
+            {% endblock meal_detail %}
         </main>
     </body>
+    <footer>
+        {% block pagination %}
+        {% endblock pagination %}
+    </footer>
 </html>

@@ -1,15 +1,12 @@
 {% extends 'base.html' %}
-{% load static %}
-
-
 {% block content %}
-<main class="recipe-form">
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <div class="control">
-      <button class="button">Update</button>
-    </div>
-  </form>
-</main>
+  <main class="recipe-form">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="control">
+        <button class="button">Update</button>
+      </div>
+    </form>
+  </main>
 {% endblock content %}
