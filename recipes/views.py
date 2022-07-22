@@ -5,12 +5,15 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from django.contrib.auth.decorators import login_required
+
 
 from recipes.forms import RatingForm
 
 # try:
 # from recipes.forms import RecipeForm
-from recipes.models import Recipe
+from recipes.models import Recipe, Ingredient
+from recipes.models import ShoppingItem
 
 # except Exception:
 # RecipeForm = None
@@ -43,6 +46,10 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["rating_form"] = RatingForm()
+        foods = []
+        for item in self.request.user.shopping_item.all():
+            foods.append(item.food_item)
+        context["food_in_shopping_list"] = foods
         return context
 
 
@@ -71,3 +78,30 @@ class RecipeDeleteView(LoginRequiredMixin, DeleteView):
     model = Recipe
     template_name = "recipes/delete.html"
     success_url = reverse_lazy("recipes_list")
+
+
+def create_shopping_item(request):
+    ingredient_id = request.POST.get("ingredient_id")
+    ingredient = Ingredient.objects.get(id=ingredient_id)
+    user = request.user
+    try:
+        ShoppingItem.objects.create(
+            food_item=ingredient.food,
+            user=user,
+        )
+    except IntegrityError:
+        pass
+    return redirect("recipe_detail", pk=ingredient.recipe.id)
+
+
+class ShoppingItemListView(LoginRequiredMixin, ListView):
+    model = ShoppingItem
+    template_name = "shopping_items/list.html"
+
+    def get_queryset(self):
+        return ShoppingItem.objects.filter(user=self.request.user)
+
+
+def delete_all_shopping_items(request):
+    ShoppingItem.objects.filter(user=request.user).delete()
+    return redirect("shopping_item_list")

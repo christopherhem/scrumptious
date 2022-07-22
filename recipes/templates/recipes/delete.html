@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block delete %}
   <main>
-    {{ user.username }}
     <div class="delete-form">
       <form method="post">
         {% csrf_token %}
-        <p>Are you sure you want to delete "{{ recipe }}"?</p>
+        <p>Are you sure you want to delete "{{ recipe.name }}"?</p>
         {{ form.as_p }}
         <div>
           <button class="button">Delete</button>

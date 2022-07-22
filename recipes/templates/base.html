@@ -22,6 +22,9 @@
                         <a href="{% url 'meal_plan_list' %}">Meal Plans</a>
                     </li>
                     <li>
+                        <a href="{% url 'shopping_item_list' %}">Shop List ({{ user.shopping_item.all|length }})</a>
+                    </li>
+                    <li>
                         <a href="{% url 'recipe_new' %}">Write a recipe</a>
                     </li>
                     {% if user.is_staff %}
@@ -71,6 +74,8 @@
             {% endblock meal_list %}
             {% block meal_detail %}
             {% endblock meal_detail %}
+            {% block shopping %}
+            {% endblock shopping %}
         </main>
     </body>
     <footer>

@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-html, button, select, textarea, input {
+html,
+button,
+select,
+textarea,
+input {
   font-family: 'Roboto';
   font-size: 16px;
 }
@@ -37,7 +41,8 @@ button.button:active {
   background-color: lightblue;
 }
 
-input, textarea {
+input,
+textarea {
   border: 1px solid #E012AD;
   border-radius: 4px;
   padding: 1em 1.5em;
@@ -47,7 +52,8 @@ table {
   margin: auto;
 }
 
-td, th {
+td,
+th {
   padding: .25em .5em;
 }
 
@@ -111,4 +117,9 @@ textarea {
   max-width: 600px;
   margin: auto;
   text-align: center;
+}
+
+.shopping-form {
+  text-align: center;
+  color: blue;
 }
