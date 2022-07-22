@@ -16,3 +16,6 @@ class MealPlan(models.Model):
     recipes = models.ManyToManyField(
         "recipes.Recipe", related_name="meal_plans"
     )
+
+    def __str__(self):
+        return self.name

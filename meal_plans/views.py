@@ -6,6 +6,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from meal_plans.models import MealPlan
+from meal_plans.forms import MealPlanForm
 
 # Create your views here.
 class MealPlanView(LoginRequiredMixin, ListView):
@@ -19,7 +20,7 @@ class MealPlanView(LoginRequiredMixin, ListView):
 class MealPlanCreateView(LoginRequiredMixin, CreateView):
     model = MealPlan
     template_name = "meal_plans/new.html"
-    fields = ["name", "date", "recipes"]
+    form_class = MealPlanForm
 
     def form_valid(self, form):
         plan = form.save(commit=False)

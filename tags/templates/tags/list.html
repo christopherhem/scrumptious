@@ -10,12 +10,14 @@
         </h2>
       </p>
     </div>
-    {% for tag in tag_list %}
-      <div class="recipe-card">
-        <h2 class="recipe-card-title">
-          <a href="{% url 'tag_detail' tag.id %}">{{ tag.name }}</a>
-        </h2>
-      {% endfor %}
-    </div>
-  </main>
-{% endblock tag_list %}
+    <div class="shopping">
+      <h1>Tags</h1>
+      {% for tag in tag_list %}
+        <div class="recipe-card">
+          <h2 class="recipe-card-title">
+            <a href="{% url 'tag_detail' tag.id %}">{{ tag.name }}</a>
+          </h2>
+        {% endfor %}
+      </div>
+    </main>
+  {% endblock tag_list %}
