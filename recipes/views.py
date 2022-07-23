@@ -4,6 +4,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django import template
+
 
 from django.contrib.auth.decorators import login_required
 
@@ -46,9 +48,13 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["rating_form"] = RatingForm()
+
         foods = []
         for item in self.request.user.shopping_item.all():
             foods.append(item.food_item)
+
+        context["servings"] = self.request.GET.get("servings")
+
         context["food_in_shopping_list"] = foods
         return context
 
@@ -56,7 +62,7 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
     template_name = "recipes/new.html"
-    fields = ["name", "description", "image"]
+    fields = ["name", "description", "servings", "image"]
     success_url = reverse_lazy("recipes_list")
 
     def form_valid(self, form):
@@ -67,7 +73,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipe
     template_name = "recipes/edit.html"
-    fields = ["name", "description", "image"]
+    fields = ["name", "description", "servings", "image"]
     success_url = reverse_lazy("recipes_list")
 
     def __str__(self):

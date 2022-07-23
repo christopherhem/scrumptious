@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load markdownify %}
+{% load resizer %}
 {% block detail %}
   <main class="recipe-detail">
     <div>
@@ -13,11 +14,26 @@
       Created on {{ recipe.created }} |
       Updated on {{ recipe.updated }}
     </p>
-    <form method="post" action="{% url 'recipe_rating' recipe.id %}">
-      {% csrf_token %}
-      <div class="rating-form-grid">
-        {{ rating_form.as_p }}
-        <button class="button">Rate</button>
+    <p>
+      {% if recipe.servings %}
+        <p>Serves: {{ servings|default_if_none:recipe.servings }}</p>
+        <form method="GET">
+          <input required
+                 type="number"
+                 placeholder="number of servings"
+                 name="servings">
+          {% csrf_token %}
+          <button>Resize</button>
+        </form>
+      {% endif %}
+    </p>
+    <p>
+      <form method="post" action="{% url 'recipe_rating' recipe.id %}">
+        {% csrf_token %}
+        <div class="rating-form-grid">
+          {{ rating_form.as_p }}
+          <button class="button">Rate</button>
+        </p>
       </div>
     </form>
     <p>
@@ -36,8 +52,9 @@
       <tbody>
         {% for ingredient in recipe.ingredients.all %}
           <tr>
-            <td>{{ ingredient.amount }}</td>
-            <td>{{ ingredient.measure.name }}</td>
+            <td>{{ ingredient|resize_to:servings }}</td>
+            {% comment %} <td>{{ ingredient.amount }}</td> {% endcomment %}
+            <td>{{ ingredient.measure.abbreviation }}</td>
             <td>{{ ingredient.food.name }}</td>
             <td>
               {% if ingredient.food not in food_in_shopping_list %}
